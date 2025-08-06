@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EggSMP Website</title>
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/hatrix1307/pngs/main/eggsword%20-%20Copy%20-%20Copy.png" />
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/hatrix1307/pngs/refs/heads/main/eggsword%20-%20Copy%20-%20Copy.png" />
 
   <style>
     body {
@@ -35,7 +35,7 @@
     .ip-label {
       font-size: 1.2rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.5rem; /* extra spacing */
       color: #ccc;
       user-select: none;
     }
@@ -50,7 +50,7 @@
       user-select: none;
       transition: background 0.2s ease;
       width: fit-content;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.5rem; /* space below IP box */
     }
 
     .ip-box:hover {
@@ -67,11 +67,6 @@
       opacity: 0;
       transition: opacity 0.3s ease;
       user-select: none;
-      position: absolute;
-      top: calc(50% + 90px);
-      left: 50%;
-      transform: translateX(-50%);
-      pointer-events: none;
     }
 
     .copied-popup.show {
@@ -96,7 +91,6 @@
       cursor: pointer;
       text-decoration: none;
       transition: background 0.3s ease;
-      user-select: none;
     }
 
     .button:hover {
@@ -121,8 +115,8 @@
   <div class="copied-popup" id="copied-popup">Copied!</div>
 
   <div class="buttons">
-    <a href="#" class="button" id="dl188" download="1_8_8.html">Download 1.8.8</a>
-    <a href="#" class="button" id="dl1122" download="1_12_2_Client.html">Download 1.12.2</a>
+    <a href="/1_8_8.html" download class="button" id="dl188">Download 1.8.8</a>
+    <a href="/1_12_2.html" download class="button" id="dl1122">Download 1.12.2</a>
   </div>
 
   <footer>
@@ -132,8 +126,6 @@
   <script>
     const ipBox = document.getElementById('copy-ip');
     const popup = document.getElementById('copied-popup');
-    const dl188 = document.getElementById('dl188');
-    const dl1122 = document.getElementById('dl1122');
 
     ipBox.addEventListener('click', () => {
       const ip = ipBox.textContent;
@@ -141,37 +133,6 @@
         popup.classList.add('show');
         setTimeout(() => popup.classList.remove('show'), 1500);
       });
-    });
-
-    // URLs of the raw files in your GitHub repo
-    const baseRawURL = "https://raw.githubusercontent.com/hatrix1307/pngs/main/";
-    const file188 = "1_8_8.html";
-    const file1122 = "1_12_2_Client.html";
-
-    function downloadFile(url, filename) {
-      fetch(url)
-        .then(resp => resp.ok ? resp.text() : Promise.reject('Failed to fetch'))
-        .then(data => {
-          const blob = new Blob([data], { type: 'text/html' });
-          const link = document.createElement('a');
-          link.href = URL.createObjectURL(blob);
-          link.download = filename;
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-          URL.revokeObjectURL(link.href);
-        })
-        .catch(err => alert('Download failed: ' + err));
-    }
-
-    dl188.addEventListener('click', e => {
-      e.preventDefault();
-      downloadFile(baseRawURL + file188, file188);
-    });
-
-    dl1122.addEventListener('click', e => {
-      e.preventDefault();
-      downloadFile(baseRawURL + file1122, file1122);
     });
   </script>
 
