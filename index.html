@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EggSMP Website</title>
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/hatrix1307/pngs/main/eggsword%20-%20Copy%20-%20Copy.png" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #aaa;
+      margin-bottom: 2rem;
+    }
+
+    .ip-label {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #ccc;
+      user-select: none;
+    }
+
+    .ip-box {
+      background: #1e1e1e;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      border: 1px solid #333;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease;
+      width: fit-content;
+      margin-bottom: 1.5rem;
+    }
+
+    .ip-box:hover {
+      background: #2a2a2a;
+    }
+
+    .copied-popup {
+      background: #2ecc71;
+      color: #111;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      user-select: none;
+      position: absolute;
+      top: calc(50% + 90px);
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .copied-popup.show {
+      opacity: 1;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .button {
+      background: #333;
+      color: #fff;
+      padding: 0.8rem 1.6rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+
+    .button:hover {
+      background: #555;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>EggSMP</h1>
+  <p>Eaglercraft Server hosted by Nate</p>
+
+  <div class="ip-label">IP</div>
+  <div class="ip-box" id="copy-ip">108.56.193.141:25565</div>
+  <div class="copied-popup" id="copied-popup">Copied!</div>
+
+  <div class="buttons">
+    <a href="#" class="button" id="dl188" download="1_8_8.html">Download 1.8.8</a>
+    <a href="#" class="button" id="dl1122" download="1_12_2_Client.html">Download 1.12.2</a>
+  </div>
+
+  <footer>
+    &copy; EggSMP — Powered by Eaglercraft
+  </footer>
+
+  <script>
+    const ipBox = document.getElementById('copy-ip');
+    const popup = document.getElementById('copied-popup');
+    const dl188 = document.getElementById('dl188');
+    const dl1122 = document.getElementById('dl1122');
+
+    ipBox.addEventListener('click', () => {
+      const ip = ipBox.textContent;
+      navigator.clipboard.writeText(ip).then(() => {
+        popup.classList.add('show');
+        setTimeout(() => popup.classList.remove('show'), 1500);
+      });
+    });
+
+    // URLs of the raw files in your GitHub repo
+    const baseRawURL = "https://raw.githubusercontent.com/hatrix1307/pngs/main/";
+    const file188 = "1_8_8.html";
+    const file1122 = "1_12_2_Client.html";
+
+    function downloadFile(url, filename) {
+      fetch(url)
+        .then(resp => resp.ok ? resp.text() : Promise.reject('Failed to fetch'))
+        .then(data => {
+          const blob = new Blob([data], { type: 'text/html' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(link.href);
+        })
+        .catch(err => alert('Download failed: ' + err));
+    }
+
+    dl188.addEventListener('click', e => {
+      e.preventDefault();
+      downloadFile(baseRawURL + file188, file188);
+    });
+
+    dl1122.addEventListener('click', e => {
+      e.preventDefault();
+      downloadFile(baseRawURL + file1122, file1122);
+    });
+  </script>
+
+</body>
+</html>
